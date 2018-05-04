@@ -8,5 +8,5 @@
 ### M lines containing edges (u,v)
 ### See sample.txt
 ### using verifier : 
-#### $./verify output_file1.txt output_file2.txt
-#### $Results do not match!
+#### $./verify output_file1.txt output_file2.txt \\
+Results do not match!
