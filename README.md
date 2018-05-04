@@ -1,5 +1,5 @@
 # connected_components_parallel
-## Compillation
+## Compilation
 ### g++ -std=c++11 -O3 dfs.cpp
 ### gcc -O3 dsu.c 
 ### nvcc -Xcompiler /openmp -O3 cc.cu
