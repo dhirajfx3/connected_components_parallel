@@ -1,14 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
-#include "windows.h"
-#include "psapi.h"
 #include <chrono>
 #pragma warning(disable :4996)
 #define ve vector
 #define getn S[df++]
-#define gets(S) fgets(S,200000000-1,stdin)
-char S[200000000];
+char *S;
 int df = 0;
 using namespace std;
 inline int readInt()
@@ -23,6 +20,17 @@ inline int readInt()
 		g = getn;
 	}
 	return m;
+}
+void input_read(char *file)
+{
+	FILE *f = fopen(file, "r");
+	fseek(f, 0, SEEK_END);
+	long fsize = ftell(f);
+	fseek(f, 0, SEEK_SET);  //same as rewind(f);
+	S=(char*)malloc(fsize+1);
+	fread(S, fsize, 1, f);
+	fclose(f);
+	S[fsize] = 0;
 }
 ve<bool> vis;
 ve<ve<int>> adj;
@@ -49,6 +57,7 @@ void dfs(int c, int id)
 		}
 	}
 }
+
 using namespace chrono;
 int main(int argc, char **argv)
 {
@@ -56,26 +65,23 @@ int main(int argc, char **argv)
 	cin.tie(0);
 	cout.tie(0);
 	/*
-	argv[1]= input file
+		 input file = input.txt
+		 output file = dfsout.txt
+		 log file = dfslog.txt
 	input file format
 	A single line of input first integer 'n'
 	second integer 'm' then m pairs of integers denoting edges
 	output : Connected components in each line
 	*/
-	/*if (argc<2)
-	{
-		printf("Input file not specified...\n");
-		exit(-1);
-	}*/
-	char file[] = "C:\\Users\\Xenor\\Documents\\sample\\parallel\\inp.txt";
-	char file2[] = "C:\\Users\\Xenor\\Documents\\sample\\parallel\\dfsout.txt";
-	char file3[] = "C:\\Users\\Xenor\\Documents\\sample\\parallel\\dfslog.txt";
+	
+	char file[] = "input.txt";
+	char file2[] = "dfsout.txt";
+	char file3[] = "dfslog.txt";
 	clock_t Input_time, Comp_time, Tot_exec_time, Output_time;
-	FILE* fs = freopen(file, "r", stdin);
 	FILE* fd = freopen(file2, "w", stdout);
 	Input_time = clock();
+	input_read(file);
 	Tot_exec_time = Input_time;
-	gets(S);
 	Comp_time = clock();
 	Input_time = Comp_time - Input_time;
 	df = 0;
@@ -115,11 +121,11 @@ int main(int argc, char **argv)
 	auto end = system_clock::now();
 	time_t end_time = system_clock::to_time_t(end);
 	fprintf(fst, "Finished computation at : %s", std::ctime(&end_time));
+	fprintf(fst,"Nodes : %d, Edges : %d\n",n,m);
 	fprintf(fst, "Input time = %.3fms\n", (Input_time*1.0 / CLOCKS_PER_SEC)*1000.0);
 	fprintf(fst, "Computation time = %.3fms\n", (Comp_time*1.0 / CLOCKS_PER_SEC)*1000.0);
 	fprintf(fst, "Output time = %.3fms\n", (Output_time*1.0 / CLOCKS_PER_SEC)*1000.0);
 	fprintf(fst, "Total execution time = %.3fms\n", (Tot_exec_time*1.0 / CLOCKS_PER_SEC)*1000.0);
-	fclose(fst);
 	fclose(fst);
 	return 0;
 }
