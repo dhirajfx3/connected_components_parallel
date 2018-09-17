@@ -1,4 +1,5 @@
 # connected_components_parallel
+## Includes algorithm for finding connected components of a graph, by partitioning a graph and then combining the results from all components to form the final components. 
 ## Compilation
 ### g++ -std=c++11 -O3 dfs.cpp
 ### gcc -O3 dsu.c 
