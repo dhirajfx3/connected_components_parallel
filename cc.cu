@@ -275,7 +275,7 @@ int main(int argc,char** argv)
 	output : Connected components in each line
 	*/
 	gpu_threads=4096;
-	cpu_threads=32;
+	cpu_threads=omp_get_max_threads();
 		if(argc>1)	
 	gpu_threads=atoi(argv[1]);
 	if(argc>2)
